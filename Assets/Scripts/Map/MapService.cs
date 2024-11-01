@@ -6,7 +6,7 @@ using ServiceLocator.Events;
 
 namespace ServiceLocator.Map
 {
-    public class MapService : MonoBehaviour
+    public class MapService : GenricMonoSingleton<MapService>
     {
         [SerializeField] private EventService eventService;
         [SerializeField] private MapScriptableObject mapScriptableObject;
@@ -17,23 +17,6 @@ namespace ServiceLocator.Map
         private SpriteRenderer tileOverlay;
 
 
-        public static MapService Instance { get { return instance; } }
-        private static MapService instance;
-
-        private void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
-            }
-
-            else
-            {
-                Destroy(this.gameObject);
-                Debug.LogError(this.name + "trying to create the instance ");
-
-            }
-        }
         private void Start()
         {
             SubscribeToEvents();

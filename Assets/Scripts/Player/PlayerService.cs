@@ -8,7 +8,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace ServiceLocator.Player
 {
-    public class PlayerService : MonoBehaviour
+    public class PlayerService : GenricMonoSingleton<PlayerService>
     {
         
         [SerializeField] public PlayerScriptableObject playerScriptableObject;
@@ -19,22 +19,10 @@ namespace ServiceLocator.Player
         private MonkeyView selectedMonkeyView;
         private int health;
 
-        public static PlayerService Instance { get { return instance; } }
-        private static PlayerService instance;
+        
         public int Money { get; private set; }
         
-        private void Awake()
-        {
-            if (instance == null)
-            {
-                instance = this;
-            }
-            else 
-            {
-                Destroy(this.gameObject);
-                Debug.LogError(this.name + " trying to create second instance ");
-            }
-        }
+       
         private void Start()
         {
             projectilePool = new ProjectilePool( playerScriptableObject.ProjectilePrefab, playerScriptableObject.ProjectileScriptableObjects);
