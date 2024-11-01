@@ -45,8 +45,8 @@ namespace ServiceLocator.Player
         {
             health = playerScriptableObject.Health;
             Money = playerScriptableObject.Money;
-            uiService.UpdateHealthUI(health);
-            uiService.UpdateMoneyUI(Money);
+            UIService.Instance.UpdateHealthUI(health);
+            UIService.Instance.UpdateMoneyUI(Money);
             activeMonkeys = new List<MonkeyController>();
         }
 
@@ -105,7 +105,7 @@ namespace ServiceLocator.Player
             if (MapService.Instance.TryGetMonkeySpawnPosition(dropPosition, out Vector3 spawnPosition))
             {
                 SpawnMonkey(monkeyType, spawnPosition);
-                soundService.PlaySoundEffects(SoundType.SpawnMonkey);
+                SoundService.Instance.PlaySoundEffects(SoundType.SpawnMonkey);
             }
         }
 
@@ -128,7 +128,7 @@ namespace ServiceLocator.Player
             int reducedHealth = health - damageToTake;
             health = reducedHealth <= 0 ? 0 : health - damageToTake;
 
-            uiService.UpdateHealthUI(health);
+            UIService.Instance.UpdateHealthUI(health);
             if(health <= 0)
                 PlayerDeath();
         }
@@ -136,15 +136,15 @@ namespace ServiceLocator.Player
         private void DeductMoney(int moneyToDedecut)
         {
             Money -= moneyToDedecut;
-            uiService.UpdateMoneyUI(Money);
+            UIService.Instance.UpdateMoneyUI(Money);
         }
 
         public void GetReward(int reward)
         {
             Money += reward;
-            uiService.UpdateMoneyUI(Money);
+           UIService.Instance.UpdateMoneyUI(Money);
         }
 
-        private void PlayerDeath() => uiService.UpdateGameEndUI(false);
+        private void PlayerDeath() => UIService.Instance.UpdateGameEndUI(false);
     }
 }
